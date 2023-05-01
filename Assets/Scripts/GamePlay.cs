@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GamePlay : MonoBehaviour
 {
-    public static GamePlay Instance;
+    public static GamePlay Instance { get; private set; }
 
     public Level_Manager level_Manager;
 
@@ -25,20 +25,42 @@ public class GamePlay : MonoBehaviour
 
     public GameObject MiniMap;
     public GameObject Player;
-
     //public MonoBehaviour Controls;
+    public static bool IsPC = true;
 
     private void Awake()
     {
+        /*
         if (Instance != null)
         {
+            // ToDo: understand
             Destroy(gameObject);
             return;
+        }
+        */
+        if (IsPC)
+        {
+            Player.GetComponent<FPSInputController>().enabled = true;
+            PauseMenu.SetActive(false);
+            GameObject.FindGameObjectWithTag("PauseButton").SetActive(false);
+            GameObject.FindGameObjectWithTag("InfoButton").SetActive(false);
+            GameObject.FindGameObjectWithTag("CTKCanvas").SetActive(false);
+        }
+        else
+        {
+            Player.GetComponent<FPSInputControllerMobile>().enabled = true;
         }
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
 
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            PauseMenu.SetActive(true);
+        }
     }
 
     // Start is called before the first frame update
@@ -73,11 +95,15 @@ public class GamePlay : MonoBehaviour
 
     IEnumerator Level_Completed()
     {
-        yield return new WaitForSeconds(1f);
+        if (IsPC)
+        {
+            MouseLock.MouseLocked = false;
+        }
         Debug.Log("Level" + level_Manager.count + " Completed");
         MiniMap.SetActive(false);
         Player.SetActive(false);
         WinPanel.SetActive(true);
+        yield return new WaitForSeconds(1f);
     }
 
 }

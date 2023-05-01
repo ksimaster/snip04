@@ -40,6 +40,7 @@ public class Hit_Normal : AS_BulletHiter
         {
             for(int i=0;i<level.Name.Count;i++)
             {
+                // ToDo: Incorect scoring
                 if (gameObject.name == level.Name[i])
                 {
                     GamePlay.Instance.UpdateScore();
