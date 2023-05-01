@@ -17,7 +17,7 @@ public class Scene_Manager : MonoBehaviour
         Coins_Text.text = GameManager.Instance.Coins.ToString();
         Time.timeScale = 1;
         timer = FindObjectOfType<StopWatch_Timer>();
-        timer.StartTimer();
+        timer.StartTimer();     
     }
 
     public void Retry()
@@ -41,16 +41,6 @@ public class Scene_Manager : MonoBehaviour
     {
         AudioListener.volume = 0;
         Debug.Log("Sounds Off !");
-    }
-
-    public void MoreGames()
-    {
-        Application.OpenURL("https://play.google.com/store/apps/dev?id=5360866347787636750");
-    }
-
-    public void NoAds()
-    {
-        Application.OpenURL("https://play.google.com/store/apps/dev?id=5360866347787636750");
     }
 
     public void Main_Menu()

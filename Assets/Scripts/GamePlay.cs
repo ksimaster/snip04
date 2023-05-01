@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class GamePlay : MonoBehaviour
 {
@@ -60,6 +61,8 @@ public class GamePlay : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             PauseMenu.SetActive(true);
+            PauseMenu.GetComponent<DOTweenAnimation>().DORestart();
+            UnlockMouse();
         }
     }
 
@@ -97,13 +100,23 @@ public class GamePlay : MonoBehaviour
     {
         if (IsPC)
         {
-            MouseLock.MouseLocked = false;
+            UnlockMouse();
         }
         Debug.Log("Level" + level_Manager.count + " Completed");
         MiniMap.SetActive(false);
         Player.SetActive(false);
         WinPanel.SetActive(true);
         yield return new WaitForSeconds(1f);
+    }
+
+    public static void UnlockMouse()
+    {
+        MouseLock.MouseLocked = false;
+    }
+
+    public static void LockMouse()
+    {
+        MouseLock.MouseLocked = true;
     }
 
 }
