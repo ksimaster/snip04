@@ -17,7 +17,8 @@ public class Scene_Manager : MonoBehaviour
         Coins_Text.text = GameManager.Instance.Coins.ToString();
         Time.timeScale = 1;
         timer = FindObjectOfType<StopWatch_Timer>();
-        timer.StartTimer();     
+        if (timer != null)
+            timer.StartTimer();     
     }
 
     public void Retry()
