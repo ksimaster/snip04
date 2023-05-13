@@ -62,6 +62,11 @@ public class SpawnManager : MonoBehaviour
     {
         //Next Level Condition
         GameManager.Instance.Selected_Level++;
+        if (GameManager.Instance.Unlocked_Level < GameManager.Instance.Selected_Level)
+        {
+            GameManager.Instance.Unlocked_Level = GameManager.Instance.Selected_Level;
+        }
+        
         //spawnPoint = spawnPoints[GameManager.Instance.Selected_Level];
         //playerPrefab.transform.position = spawnPoint.position;
     }

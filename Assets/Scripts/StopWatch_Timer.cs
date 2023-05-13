@@ -32,6 +32,11 @@ public class StopWatch_Timer : MonoBehaviour
                 currentTime = 0f;
                 timerText.text = "00:00";
                 losePanel.SetActive(true);
+                /*var gp = GameObject.FindGameObjectWithTag("GamePlay");
+                if (gp.IsPC)
+                {
+                    gp.UnlockMouse();
+                }*/
             }
         }
     }

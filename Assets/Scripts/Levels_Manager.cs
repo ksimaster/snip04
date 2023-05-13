@@ -10,7 +10,12 @@ public class Levels_Manager : MonoBehaviour
 
     void Update()
     {
-        GameManager.Instance.Unlocked_Level = GameManager.Instance.Selected_Level;
+        if (GameManager.Instance == null)
+        {
+            return;
+        }
+
+        // GameManager.Instance.Unlocked_Level = GameManager.Instance.Selected_Level;
         for (int i = 0; i < GameManager.Instance.Unlocked_Level; i++)
         {
             Level_Locks[i].SetActive(false);

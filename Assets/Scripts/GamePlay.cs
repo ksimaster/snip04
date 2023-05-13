@@ -60,8 +60,13 @@ public class GamePlay : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            PauseMenu.SetActive(true);
-            PauseMenu.GetComponent<DOTweenAnimation>().DORestart();
+            try
+            {
+                PauseMenu.SetActive(true);
+                PauseMenu.GetComponent<DOTweenAnimation>().DORestart();
+            }
+            catch { }
+
             UnlockMouse();
         }
     }
@@ -88,6 +93,10 @@ public class GamePlay : MonoBehaviour
         Total_Reward.text = Total.ToString();
         //Coins Update...
         GameManager.Instance.Coins += Total;
+        if (GameManager.Instance.Unlocked_Level == GameManager.Instance.Selected_Level && GameManager.Instance.Unlocked_Level < 14)
+        {
+            GameManager.Instance.Unlocked_Level++;
+        }
         GameManager.Instance.SaveUserData();
 
         if (score >= level_Manager.count)
