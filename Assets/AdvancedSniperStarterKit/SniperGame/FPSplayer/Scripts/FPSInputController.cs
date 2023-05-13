@@ -25,6 +25,10 @@ public class FPSInputController : MonoBehaviour
 
 	void Update ()
 	{
+		if (!MouseLock.MouseLocked)
+        {
+			return;
+        }
 
 		FPSmotor.Aim(new Vector2(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y")));
 		FPSmotor.Move (new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical")));

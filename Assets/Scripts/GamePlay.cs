@@ -26,6 +26,7 @@ public class GamePlay : MonoBehaviour
 
     public GameObject MiniMap;
     public GameObject Player;
+    public GameObject LoosePanel;
     //public MonoBehaviour Controls;
     public static bool IsPC = true;
 
@@ -120,6 +121,19 @@ public class GamePlay : MonoBehaviour
 
     public static void UnlockMouse()
     {
+        if (IsPC)
+        {
+            var player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                var gh = player.GetComponent<GunHanddle>();
+                if (gh != null)
+                {
+                    gh.Zoom(false);
+                }
+            }
+        }
+
         MouseLock.MouseLocked = false;
     }
 
@@ -128,4 +142,9 @@ public class GamePlay : MonoBehaviour
         MouseLock.MouseLocked = true;
     }
 
+    public void LockMouseIfNeeded()
+    {
+        if (!WinPanel.active && !LoosePanel.active)
+            MouseLock.MouseLocked = true;
+    }
 }

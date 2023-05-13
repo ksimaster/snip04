@@ -21,12 +21,19 @@ public class GunHanddle : MonoBehaviour
 		}
 		SwitchGun (0);
 	}
-	
-	public void Zoom ()
+
+	public void Zoom()
 	{
 		if (CurrentGun)
-			CurrentGun.Zoom ();
+			CurrentGun.Zoom();
 	}
+
+	public void Zoom (bool zoom)
+	{
+		if (CurrentGun && CurrentGun.Zooming != zoom)
+			CurrentGun.Zooming = zoom;
+	}
+
 	public void ZoomToggle ()
 	{
 		if (CurrentGun)
