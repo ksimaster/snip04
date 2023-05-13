@@ -31,12 +31,12 @@ public class StopWatch_Timer : MonoBehaviour
                 isRunning = false;
                 currentTime = 0f;
                 timerText.text = "00:00";
-                losePanel.SetActive(true);
-                /*var gp = GameObject.FindGameObjectWithTag("GamePlay");
-                if (gp.IsPC)
+                if (GamePlay.IsPC)
                 {
-                    gp.UnlockMouse();
-                }*/
+                    GamePlay.UnlockMouse();
+                }
+
+                losePanel.SetActive(true);
             }
         }
     }
