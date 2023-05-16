@@ -13,7 +13,7 @@ public class FPSInputController : MonoBehaviour
 
 	
 	void Start(){
-		Application.targetFrameRate = 60;
+	//	Application.targetFrameRate = 60;
 		MouseLock.MouseLocked = true;
 
 	}
