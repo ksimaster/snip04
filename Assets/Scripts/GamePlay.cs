@@ -66,17 +66,19 @@ public class GamePlay : MonoBehaviour
                 if (PauseMenu.activeSelf)
                 {
                     PauseMenu.SetActive(false);
+                    LockMouse();
                 }
                 else
                 {
                     PauseMenu.SetActive(true);
                     PauseMenu.GetComponent<DOTweenAnimation>().DORestart();
+                    UnlockMouse();
                 }
                 
             }
             catch { }
 
-            UnlockMouse();
+            
         }
     }
 
