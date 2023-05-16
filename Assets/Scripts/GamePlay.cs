@@ -59,12 +59,20 @@ public class GamePlay : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             try
             {
-                PauseMenu.SetActive(true);
-                PauseMenu.GetComponent<DOTweenAnimation>().DORestart();
+                if (PauseMenu.activeSelf)
+                {
+                    PauseMenu.SetActive(false);
+                }
+                else
+                {
+                    PauseMenu.SetActive(true);
+                    PauseMenu.GetComponent<DOTweenAnimation>().DORestart();
+                }
+                
             }
             catch { }
 

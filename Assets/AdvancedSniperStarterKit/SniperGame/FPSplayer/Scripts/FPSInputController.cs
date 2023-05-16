@@ -33,7 +33,7 @@ public class FPSInputController : MonoBehaviour
 		FPSmotor.Aim(new Vector2(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y")));
 		FPSmotor.Move (new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical")));
         FPSmotor.Jump(TCKInput.GetAction("jumpBtn", EActionEvent.Down));
-        //FPSmotor.Jump (Input.GetButton ("Jump"));
+        FPSmotor.Jump (Input.GetButton ("Jump"));
 
         if (Input.GetKey(KeyCode.LeftShift)){
 			FPSmotor.Boost(1.7f);	
