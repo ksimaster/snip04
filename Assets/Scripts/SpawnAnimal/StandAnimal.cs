@@ -9,8 +9,10 @@ public class StandAnimal : MonoBehaviour
     private float posY;
     private float posZ;
 
-    public float sideAreaSpawn = 900;
+    private float sideAreaSpawn = 200;
     public GameObject mapPoint;
+    public GameObject player;
+
 
     private void Awake()
     {
@@ -19,9 +21,9 @@ public class StandAnimal : MonoBehaviour
 
     private void Start()
     {
-        posX = Random.Range(mapPoint.transform.position.x, mapPoint.transform.position.x + sideAreaSpawn);
-        posY = 100;
-        posZ = Random.Range(mapPoint.transform.position.z, mapPoint.transform.position.z + sideAreaSpawn);
+        posX = Random.Range(player.transform.position.x - sideAreaSpawn, player.transform.position.x + sideAreaSpawn);
+        posY = 50;
+        posZ = Random.Range(player.transform.position.z - sideAreaSpawn, player.transform.position.z + sideAreaSpawn);
         gameObject.transform.position = new Vector3(posX, posY, posZ);
     }
 
