@@ -44,6 +44,12 @@ public class Gun : MonoBehaviour
 	public int AmmoIn = 1;
 	public int AmmoPack = 90;
 	public int AmmoPackMax = 90;
+	public bool Boltout { get
+        {
+			return boltout;
+        } 
+	}
+
 	protected float MouseSensitiveZoom = 0.5f;
 	protected bool boltout;
 	protected float timefire = 0;

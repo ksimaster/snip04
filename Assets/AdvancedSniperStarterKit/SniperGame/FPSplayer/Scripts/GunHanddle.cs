@@ -90,4 +90,12 @@ public class GunHanddle : MonoBehaviour
 		if (CurrentGun)
 			CurrentGun.FPSmotor.Holdbreath (noiseMult);
 	}
+
+	public bool IsShoot()
+	{
+		if (CurrentGun)
+			return !CurrentGun.Boltout;
+
+		return true;
+	}
 }

@@ -9,19 +9,31 @@ public class Robot_AI : MonoBehaviour
     NavMeshAgent agent;
     public Vector3 Random_Destination;
     Animator anim;
-    private float safeDistance = 35.0f;
+    GunHanddle gun;
+    private float safeDistance = 35.0f; // ƒо куда можно подойти и животное не заметит
+    private float safeDistanceRun = 50.0f; // ƒо куда можно бежать и животное не заметит
+    private float safeDistanceShoot = 80.0f; // C какого рассто€ни€ можно стрел€ть 150
+    private float safeDistanceDewarn = 50.0f; // ѕробежав сколько животное успокоитс€
     public Transform Player;
-    private float distanceToPlayer;
     private const float MaxSpeed = 15f;
     private const float SpeedUp = 1f;
     private bool IsSpeedUp = false;
+    private bool IsWarned = false;
+    private FPSController FPSmotor;
+
+    private float navTimer = 0f; // 
     private float wanderTimer = 6f; // „ерез сколько успокоитс€
+    private float wanderTimerMax = 20f; // „ерез сколько успокоитс€ точно
+
+    private Vector3 wanderPosition; // √де животное спугнули
 
     void Start()
     {
         agent = gameObject.GetComponent<NavMeshAgent>();
         Random_Destination = RandomNavmeshLocation(50);
         anim = GetComponent<Animator>();
+        gun = Player.GetComponentInChildren<GunHanddle>();
+        FPSmotor = Player.GetComponentInChildren<FPSController>();
     }
 
     void Update()
@@ -32,28 +44,69 @@ public class Robot_AI : MonoBehaviour
         }
 
         //Distance of player from the animal...
-        distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
-        //anim.SetBool("Run", false);
-        //anim.SetBool("Shoot", false);
-        timer += Time.deltaTime;
+        var distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
+        var deltaTime = Time.deltaTime;
+        timer += deltaTime;
+        navTimer += deltaTime;
 
-        if (timer >= wanderTimer && distanceToPlayer > safeDistance)
+        if (navTimer > wanderTimer)
         {
             //Agent.speed = Speed;
             Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
             try
             {
                 agent.SetDestination(newPos);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.Write(e);
             }
-               
+
+            navTimer = 0;
+        }
+
+        if (!IsWarned)
+        {
+            if (distanceToPlayer < safeDistanceShoot && gun.IsShoot())
+            {
+                RunAway();
+            }
+
+            else if (distanceToPlayer < safeDistance)
+            {
+                RunAway();
+            }
+            
+            else if (distanceToPlayer < safeDistanceRun && FPSmotor.motor != null && FPSmotor.motor.boostMults > 1)
+            {
+                RunAway();
+            }
+        }
+        
+
+        if (IsWarned && timer >= wanderTimer && distanceToPlayer > safeDistance)
+        {
+            if (wanderPosition != null)
+            {
+                var distanceToWanderPlace = Vector3.Distance(transform.position, wanderPosition);
+                if (distanceToWanderPlace > safeDistanceDewarn || timer >= wanderTimerMax)
+                {
+                    IsWarned = false;
+                }
+            }
+            else
+            {
+                IsWarned = false;
+            }
+        }
+
+        if (!IsWarned)
+        {               
             anim.SetBool("Run", false);
             anim.SetBool("Walk", true);
             agent.speed = 1.5f;
-            timer = 0;
         }
+
         if (IsSpeedUp)
         {
             if (agent.speed < MaxSpeed)
@@ -66,18 +119,16 @@ public class Robot_AI : MonoBehaviour
             }
         }
 
-        if(distanceToPlayer < safeDistance)
-        {
-            RunAway();
-            IsSpeedUp = true;
-        }
     }
 
     void RunAway()
     {
+        IsWarned = true;
+        IsSpeedUp = true;
         anim.SetBool("Run", true);
         anim.SetBool("Walk", false);
-
+        wanderPosition = transform.position + new Vector3(0,0,0);
+        timer = 0;
         //Invoke("ResumeNormalActivity", 5.0f);
     }
 
@@ -98,7 +149,7 @@ public class Robot_AI : MonoBehaviour
 
 
     #region Wander
-    public float wanderRadius; // безсмысленна€ переменна€
+    public float wanderRadius; //–ассто€ние, на которое животное планирует 
     private Transform target;
     private float timer;
     public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
