@@ -143,8 +143,6 @@ public class FPSController : MonoBehaviour
         rotation.eulerAngles = angle;
         // Apply the direction to the CharacterMotor
         motor.inputMoveDirection = rotation * directionVector;
-
-
     }
 
     public void Jump(bool jump)
@@ -163,7 +161,6 @@ public class FPSController : MonoBehaviour
 
     void Update()
     {
-
         motor.boostMults += (1 - motor.boostMults) * Time.deltaTime;
         stunY += (0 - stunY) / 20f;
 

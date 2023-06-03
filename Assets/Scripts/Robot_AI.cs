@@ -21,12 +21,15 @@ public class Robot_AI : MonoBehaviour
     private bool IsWarned = false;
     private FPSController FPSmotor;
 
+    private float uploadTimer = 0f; // 
     private float navTimer = 0f; // 
     private float wanderTimer = 6f; // Через сколько успокоится
     private float wanderTimerMax = 20f; // Через сколько успокоится точно
 
     private Vector3 wanderPosition; // Где животное спугнули
 
+    private float checkTimer = 0.5f;
+    
     void Start()
     {
         agent = gameObject.GetComponent<NavMeshAgent>();
@@ -38,6 +41,16 @@ public class Robot_AI : MonoBehaviour
 
     void Update()
     {
+        var deltaTime = Time.deltaTime;
+        uploadTimer += deltaTime;
+
+        if (uploadTimer < checkTimer)
+        {
+            return;
+        }
+
+        uploadTimer = 0;
+        
         if ( /*to check if the animal is already dead*/anim.GetBool("Death"))
         {
             return;
@@ -45,7 +58,6 @@ public class Robot_AI : MonoBehaviour
 
         //Distance of player from the animal...
         var distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
-        var deltaTime = Time.deltaTime;
         timer += deltaTime;
         navTimer += deltaTime;
 

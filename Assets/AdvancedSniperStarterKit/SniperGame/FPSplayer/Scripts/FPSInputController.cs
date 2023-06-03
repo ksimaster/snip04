@@ -9,14 +9,12 @@ public class FPSInputController : MonoBehaviour
 {
 	private GunHanddle gunHanddle;
 	private FPSController FPSmotor;
-
-
 	
 	void Start(){
 	//	Application.targetFrameRate = 60;
 		MouseLock.MouseLocked = true;
-
 	}
+
 	void Awake ()
 	{
 		FPSmotor = GetComponent<FPSController> ();		
