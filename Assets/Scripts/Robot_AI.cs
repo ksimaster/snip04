@@ -28,7 +28,7 @@ public class Robot_AI : MonoBehaviour
 
     private Vector3 wanderPosition; // Где животное спугнули
 
-    private float checkTimer = 0.5f;
+    private float checkTimer = 0.1f;
     
     void Start()
     {
@@ -43,6 +43,8 @@ public class Robot_AI : MonoBehaviour
     {
         var deltaTime = Time.deltaTime;
         uploadTimer += deltaTime;
+        timer += deltaTime;
+        navTimer += deltaTime;
 
         if (uploadTimer < checkTimer)
         {
@@ -58,8 +60,7 @@ public class Robot_AI : MonoBehaviour
 
         //Distance of player from the animal...
         var distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
-        timer += deltaTime;
-        navTimer += deltaTime;
+
 
         if (navTimer > wanderTimer)
         {
